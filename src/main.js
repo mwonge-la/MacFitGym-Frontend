@@ -9,7 +9,8 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import * as labsComponents from 'vuetify/labs/components'
-
+//icon fonts 
+import '@mdi/font/css/materialdesignicons.css'
 // Components
 
 
@@ -24,8 +25,16 @@ const vuetify = createVuetify({
     defaultSet: 'mdi', // This is already the default value - only for display purposes
   },
   theme:{
-    defaultTheme:'light'
-  }
+    defaultTheme:'light',
+    themes:{
+      light:{
+        colors:{
+          primary:"#A6AD1E",
+          secondary:"#CFD0D6"
+        }
+      }
+    }
+  },
 })
 
 const app = createApp(App)

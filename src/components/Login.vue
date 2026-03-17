@@ -1,5 +1,10 @@
 <script setup>
      import { ref } from 'vue'
+     import { useRouter } from "vue-router";
+    import {useAuth} from '../services/auth'
+
+    const router = useRouter();
+    const { login, loading, error } = useAuth()
 
   const rules = {
     required: value => !!value || 'Required.',
@@ -10,6 +15,32 @@
   const show1 = ref(false)
   const show2 = ref(true)
   const password = ref(null)
+  const username = ref(null)
+  
+  async function handleLogin() {
+  
+  if (!username.value || !password.value) {
+    console.error('Email and password are required')
+    return
+  }
+  
+  try {
+    await login({
+      email: username.value,
+      password: password.value
+    })
+   
+    // Redirect after successful login
+    router.push('/homepage').then(() => {
+        router.go(0); // Reloads the current route
+    });
+  } catch (err) {
+    // Error is already handled by the auth service
+    console.error('Login failed', err)
+  }
+}
+
+
 </script>
 
 <template>
@@ -52,7 +83,7 @@
                 </v-row>
                <v-row>
                     <v-col md="12">
-                        <v-btn color="#3A4B68" variant="elevated">Login</v-btn>
+                        <v-btn color="#3A4B68" variant="elevated"@click="handleLogin">Log in</v-btn>
                     </v-col>
                 </v-row>
             <v-row>
